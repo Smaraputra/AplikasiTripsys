@@ -48,7 +48,7 @@
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/drawable/selected_bg_text_item.xml" value="0.1" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/drawable/spinner_style.xml" value="0.1" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/drawable/unselected_bg_text_item.xml" value="0.1" />
-        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_add_activity_detail.xml" value="0.176" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_add_activity_detail.xml" value="0.4" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_add_detail.xml" value="0.1486111111111111" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_add_new_trip.xml" value="0.264" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_add_trip.xml" value="0.264" />
@@ -63,9 +63,13 @@
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_trip.xml" value="0.1486111111111111" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/activity_tripactivity_detail.xml" value="0.264" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/dialog_register.xml" value="0.264" />
-        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/fragment_tripmanagement.xml" value="0.2" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/fragment_profiluser.xml" value="0.2" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/fragment_tripmanagement.xml" value="0.264" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/nav_header.xml" value="0.2" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/profiluser_fragment.xml" value="0.264" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/recycler_activity_detail.xml" value="0.4" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/recycler_trip.xml" value="0.264" />
+        <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/recycler_trip_detail.xml" value="0.264" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/recycler_user.xml" value="0.19202898550724637" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/layout/usermanagement_fragment.xml" value="0.176" />
         <entry key="..\:/Users/Smara/AndroidStudioProjects/tubesprogmoblanjutan/app/src/main/res/menu/menu_navdrawer.xml" value="0.22592592592592592" />

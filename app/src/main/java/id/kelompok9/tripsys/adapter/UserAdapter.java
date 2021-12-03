@@ -1,9 +1,6 @@
 package id.kelompok9.tripsys.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import id.kelompok9.tripsys.R;
-import id.kelompok9.tripsys.activity.DashboardApp;
 import id.kelompok9.tripsys.model.UserModel;
 
 
@@ -37,7 +33,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_user, parent, false);
+        View view = inflater.inflate(R.layout.recycler_trip, parent, false);
         return new MyViewHolder(view);
     }
 
