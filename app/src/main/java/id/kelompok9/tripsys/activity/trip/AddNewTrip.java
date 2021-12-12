@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +28,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import id.kelompok9.tripsys.R;
+import id.kelompok9.tripsys.activity.DashboardApp;
+import id.kelompok9.tripsys.activity.tripdetail.AddNewTripDetail;
+import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.adapter.TripAdapter;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.CategoriesModel;
@@ -44,6 +48,7 @@ public class AddNewTrip extends AppCompatActivity {
     int statusForm, statusDate;
     String namaTrip;
     String startTrip;
+    long startMS=0,endMS=0;
     String endTrip;
     int categoryTrip;
     List<CategoriesModel> categories = new ArrayList<>();
@@ -52,7 +57,6 @@ public class AddNewTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_trip);
-        Log.d("CURRR", String.valueOf(System.currentTimeMillis()));
 
         sharedPreferences = getSharedPreferences("loginsession", getApplicationContext().MODE_PRIVATE);
         iduser = sharedPreferences.getInt("iduser",0);
@@ -93,6 +97,14 @@ public class AddNewTrip extends AppCompatActivity {
                             iduser, namaTrip, categoryTrip, startTrip, endTrip
                     );
                     db.tripsDao().tambahTrip(tripsModel);
+
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast sukses = Toast.makeText(context, "Trip created.", duration);
+                    sukses.show();
+
+                    Intent intent1 = new Intent(AddNewTrip.this, DashboardApp.class);
+                    startActivity(intent1);
                 }else{
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
@@ -110,19 +122,30 @@ public class AddNewTrip extends AppCompatActivity {
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewTrip.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialogStart = new DatePickerDialog(AddNewTrip.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        startTrip = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear) + "/" + String.valueOf(year);
+                        startTrip = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1) + "/" + String.valueOf(year);
                         if(TextUtils.isEmpty(endTrip)){
                             statusDate = 0;
                         }
                         statusDate = statusDate + 1;
                         start.setText(startTrip);
+
+                        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                        try {
+                            Date s = f.parse(startTrip);
+                            startMS = s.getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000);
-                datePickerDialog.show();
+                datePickerDialogStart.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000);
+                if(endMS!=0){
+                    datePickerDialogStart.getDatePicker().setMaxDate(endMS - 86400000);
+                }
+                datePickerDialogStart.show();
             }
         });
 
@@ -134,19 +157,29 @@ public class AddNewTrip extends AppCompatActivity {
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewTrip.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialogEnd = new DatePickerDialog(AddNewTrip.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        endTrip = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear) + "/" + String.valueOf(year);
+                        endTrip = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1) + "/" + String.valueOf(year);
                         if(TextUtils.isEmpty(startTrip)){
                             statusDate = 0;
                         }
                         statusDate = statusDate + 1;
                         end.setText(endTrip);
+
+                        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                        try {
+                            Date e = f.parse(endTrip);
+                            endMS = e.getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000*2);
-                datePickerDialog.show();
+                if(startMS!=0){
+                    datePickerDialogEnd.getDatePicker().setMinDate(startMS + 86400000);
+                }
+                datePickerDialogEnd.show();
             }
         });
 
@@ -173,7 +206,7 @@ public class AddNewTrip extends AppCompatActivity {
     public void bacaNamaTrip(){
         namaTrip = nama.getText().toString();
         if(TextUtils.isEmpty(namaTrip)){
-            nama.setError("Please enter your name!");
+            nama.setError("Please enter your trip name!");
         }else{
             nama.setError(null);
             statusForm=statusForm+1;

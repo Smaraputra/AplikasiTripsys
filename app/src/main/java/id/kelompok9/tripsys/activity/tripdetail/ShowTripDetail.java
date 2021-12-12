@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.kelompok9.tripsys.R;
-import id.kelompok9.tripsys.adapter.TripAdapter;
 import id.kelompok9.tripsys.adapter.TripDetailAdapter;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.TripDetailsModel;
@@ -55,9 +54,11 @@ public class ShowTripDetail extends AppCompatActivity {
         trip = db.tripsDao().getOneTrip(idtrip);
         detail = db.tripDetailsDao().getTripDetailOnTripID(trip.get(0).getId_trip());
         if(detail.size()==0){
-
+            nodata.setVisibility(View.VISIBLE);
+            tripdetail.setVisibility(View.GONE);
         }else{
-
+            nodata.setVisibility(View.GONE);
+            tripdetail.setVisibility(View.VISIBLE);
         }
 
         start.setText(trip.get(0).getTrip_start());
@@ -76,15 +77,15 @@ public class ShowTripDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(ShowTripDetail.this, AddNewTripDetail.class);
+                intent1.putExtra("idtrip", idtrip);
                 startActivity(intent1);
             }
         });
 
-        tripdetail = (RecyclerView) findViewById(R.id.recyclerViewActDetailTrip);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShowTripDetail.this);
         tripdetail.setLayoutManager(linearLayoutManager);
         tripdetail.setHasFixedSize(true);
-        tripDetailAdapter = new TripDetailAdapter(getApplicationContext(), detail);
+        tripDetailAdapter = new TripDetailAdapter(ShowTripDetail.this, detail, idtrip);
         tripdetail.setAdapter(tripDetailAdapter);
     }
 }

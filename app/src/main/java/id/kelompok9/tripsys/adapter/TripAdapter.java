@@ -3,6 +3,7 @@ package id.kelompok9.tripsys.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -35,8 +37,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
         this.context = ct;
         this.tripData = trip_in;
         this.mArrayList = tripData;
-        db  = AppDatabase.getDbInstance(ct);
-        categories = db.categoriesDao().getAllCategory();
+        db = AppDatabase.getDbInstance(ct);
     }
 
     @NonNull
@@ -49,9 +50,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        final TripsModel trip = mArrayList.get(position);
+        final TripsModel trip = tripData.get(position);
         holder.namaTrip.setText(trip.getTrip_name());
-        holder.categoryTrip.setText(categories.get(trip.getTrip_category()).getCategory_name());
+        holder.categoryTrip.setText(db.categoriesDao().getOneCategory(trip.getTrip_category()).get(0).getCategory_name());
         holder.startTrip.setText(trip.getTrip_start());
         holder.endTrip.setText(trip.getTrip_end());
     }
@@ -64,7 +65,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView namaTrip, categoryTrip, startTrip, endTrip;
-        Button showdetail, delete;
+        Button edit, delete;
+        CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,17 +74,25 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
             categoryTrip = itemView.findViewById(R.id.categoryTrip);
             startTrip = itemView.findViewById(R.id.startDateTrip);
             endTrip = itemView.findViewById(R.id.endDateTrip);
+            cardView = itemView.findViewById(R.id.cardTrip);
 
-            showdetail = itemView.findViewById(R.id.buttonManageTrip);
+            edit = itemView.findViewById(R.id.buttonManageTrip);
             delete = itemView.findViewById(R.id.buttonDeleteTrip);
 
-            showdetail.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int idtrip = mArrayList.get(getAdapterPosition()).getId_trip();
                     Intent intent = new Intent(context, ShowTripDetail.class);
                     intent.putExtra("idtrip", idtrip);
                     context.startActivity(intent);
+                }
+            });
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
                 }
             });
 
@@ -108,6 +118,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
                 .setPositiveButton("Delete",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         AppDatabase db  = AppDatabase.getDbInstance(context);
+                        db.activitiesDao().deleteAllActivityOnTripID(idTrip);
+                        db.tripDetailsDao().deleteAllTripDetailONTripID(idTrip);
                         db.tripsDao().deleteOneTrip(idTrip);
                     }
                 })

@@ -19,24 +19,22 @@ import java.util.List;
 
 import id.kelompok9.tripsys.R;
 import id.kelompok9.tripsys.activity.tripactivity.ShowActivityDetail;
-import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.database.AppDatabase;
+import id.kelompok9.tripsys.model.ActivityModel;
 import id.kelompok9.tripsys.model.TripDetailsModel;
 
 
-public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.MyViewHolder>{
+public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder>{
 
     private Context context;
-    private List<TripDetailsModel> tripData = new ArrayList<>();
-    private List<TripDetailsModel> mArrayList = new ArrayList<>();
-    int idtrip;
+    private List<ActivityModel> activityData = new ArrayList<>();
+    private List<ActivityModel> mArrayList = new ArrayList<>();
     AppDatabase db;
 
-    public TripDetailAdapter(Context ct, List<TripDetailsModel> tripdetail_in, int idtrip){
+    public ActivityAdapter(Context ct, List<ActivityModel> activityData){
         this.context = ct;
-        this.tripData = tripdetail_in;
-        this.mArrayList = tripData;
-        this.idtrip = idtrip;
+        this.activityData = activityData;
+        this.mArrayList = activityData;
         db  = AppDatabase.getDbInstance(ct);
     }
 
@@ -44,17 +42,15 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_trip_detail, parent, false);
+        View view = inflater.inflate(R.layout.recycler_activity_detail, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        final TripDetailsModel tripdetail = mArrayList.get(position);
-        holder.dateDetailTrip.setText(tripdetail.getDate_trip_detail());
-        holder.activityDetailTrip.setText(tripdetail.getActivity_trip_detail());
-        holder.locationDetailTrip.setText(tripdetail.getLocation_trip_detail());
-        holder.noteDetailTrip.setText(tripdetail.getNote_trip_detail());
+        final ActivityModel activity = mArrayList.get(position);
+        holder.toDo.setText(activity.getTo_do_activity());
+        holder.hour.setText(activity.getClock_activity());
     }
 
     @Override
@@ -64,35 +60,20 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView activityDetailTrip, locationDetailTrip, noteDetailTrip, dateDetailTrip;
+        TextView toDo, hour;
         Button edit, delete;
-        CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            activityDetailTrip = itemView.findViewById(R.id.namaAktivitasDetailTrip);
-            locationDetailTrip = itemView.findViewById(R.id.lokasiDetailTrip);
-            noteDetailTrip = itemView.findViewById(R.id.noteDetailTrip);
-            dateDetailTrip = itemView.findViewById(R.id.tanggalDetailTrip);
-            cardView = itemView.findViewById(R.id.cardDetailTrip);
+            toDo = itemView.findViewById(R.id.showToDoActivity);
+            hour = itemView.findViewById(R.id.showHourActivity);
 
-            edit = itemView.findViewById(R.id.buttonManageDetailTrip);
-            delete = itemView.findViewById(R.id.buttonDeleteDetailTrip);
-
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int iddetailtrip = mArrayList.get(getAdapterPosition()).getId_trip_detail();
-                    Intent intent = new Intent(context, ShowActivityDetail.class);
-                    intent.putExtra("idtrip", idtrip);
-                    intent.putExtra("iddetailtrip", iddetailtrip);
-                    context.startActivity(intent);
-                }
-            });
+            edit = itemView.findViewById(R.id.buttonManageActivity);
+            delete = itemView.findViewById(R.id.buttonDeleteActivity);
 
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
 
                 }
             });
@@ -100,17 +81,17 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int iddetailtrip = mArrayList.get(getAdapterPosition()).getId_trip_detail();
-                    showDialogDelete(iddetailtrip);
+                    int idact = mArrayList.get(getAdapterPosition()).getId_trip_activity();
+                    showDialogDelete(idact);
                 }
             });
         }
     }
 
-    private void showDialogDelete(int iddetailtrip){
+    private void showDialogDelete(int idact){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-        alertDialogBuilder.setTitle("You want to delete this trip detail?");
+        alertDialogBuilder.setTitle("You want to delete this activity?");
 
         alertDialogBuilder
                 .setMessage("Choose 'Yes' to delete.")
@@ -119,8 +100,7 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
                 .setPositiveButton("Delete",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         AppDatabase db  = AppDatabase.getDbInstance(context);
-                        db.activitiesDao().deleteAllActivityOnTripDetailID(iddetailtrip);
-                        db.tripDetailsDao().deleteOneTripDetail(iddetailtrip);
+                        db.activitiesDao().deleteOneActivity(idact);
                     }
                 })
                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {

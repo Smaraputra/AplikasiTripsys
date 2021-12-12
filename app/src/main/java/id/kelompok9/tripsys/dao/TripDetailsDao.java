@@ -23,6 +23,9 @@ public interface TripDetailsDao {
     @Query("DELETE FROM trip_details WHERE id_trip_detail = :idmasuk")
     void deleteOneTripDetail(int idmasuk);
 
+    @Query("DELETE FROM trip_details WHERE id_trip_trip_detail = :idmasuk")
+    void deleteAllTripDetailONTripID(int idmasuk);
+
     @Insert
     void tambahTripDetail(TripDetailsModel tripDetailsModel);
 

@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardDetailTrip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -163,7 +164,7 @@
                     android:gravity="center"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Detail"
+                    android:text="Edit"
                     card_view:cornerRadius="10dp" />
 
                 <Button

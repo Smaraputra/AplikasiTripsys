@@ -10,6 +10,8 @@ public class ActivityModel {
 
     @PrimaryKey(autoGenerate = true)
     private int id_activity;
+    @ColumnInfo(name = "id_trip_activity")
+    private int id_trip_activity;
     @ColumnInfo(name = "id_trip_detail_activity")
     private int id_trip_detail_activity;
     @ColumnInfo(name = "clock_activity")
@@ -18,13 +20,13 @@ public class ActivityModel {
     private String to_do_activity;
 
     @Ignore
-    public ActivityModel(int id_trip_detail_activity, String clock_activity, String to_do_activity) {
+    public ActivityModel(int id_trip_activity, int id_trip_detail_activity, String clock_activity, String to_do_activity) {
         this.id_trip_detail_activity = id_trip_detail_activity;
         this.clock_activity = clock_activity;
         this.to_do_activity = to_do_activity;
     }
 
-    public ActivityModel(int id_activity, int id_trip_detail_activity, String clock_activity, String to_do_activity) {
+    public ActivityModel(int id_activity, int id_trip_activity, int id_trip_detail_activity, String clock_activity, String to_do_activity) {
         this.id_activity = id_activity;
         this.id_trip_detail_activity = id_trip_detail_activity;
         this.clock_activity = clock_activity;
@@ -37,6 +39,14 @@ public class ActivityModel {
 
     public void setId_activity(int id_activity) {
         this.id_activity = id_activity;
+    }
+
+    public int getId_trip_activity() {
+        return id_trip_activity;
+    }
+
+    public void setId_trip_activity(int id_trip_activity) {
+        this.id_trip_activity = id_trip_activity;
     }
 
     public int getId_trip_detail_activity() {

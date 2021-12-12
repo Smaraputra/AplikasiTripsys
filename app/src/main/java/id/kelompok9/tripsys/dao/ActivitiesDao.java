@@ -24,8 +24,14 @@ public interface ActivitiesDao {
     @Query("Select * from activities WHERE id_trip_detail_activity = :idmasuk")
     List<ActivityModel> getActivityOnTripDetailID(int idmasuk);
 
-    @Query("DELETE FROM activities WHERE id_trip_detail_activity = :idmasuk")
+    @Query("DELETE FROM activities WHERE id_activity = :idmasuk")
     void deleteOneActivity(int idmasuk);
+
+    @Query("DELETE FROM activities WHERE id_trip_detail_activity = :idmasuk")
+    void deleteAllActivityOnTripDetailID(int idmasuk);
+
+    @Query("DELETE FROM activities WHERE id_trip_activity = :idmasuk")
+    void deleteAllActivityOnTripID(int idmasuk);
 
     @Insert
     void tambahActivity(ActivityModel activityModel);

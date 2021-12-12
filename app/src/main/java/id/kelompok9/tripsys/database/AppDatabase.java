@@ -17,7 +17,7 @@ import id.kelompok9.tripsys.model.TripDetailsModel;
 import id.kelompok9.tripsys.model.TripsModel;
 import id.kelompok9.tripsys.model.UsersModel;
 
-@Database(entities = {TripsModel.class, TripDetailsModel.class ,CategoriesModel.class, ActivityModel.class, UsersModel.class}, version  = 1)
+@Database(entities = {TripsModel.class, TripDetailsModel.class ,CategoriesModel.class, ActivityModel.class, UsersModel.class}, version  = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UsersDao usersDao();
