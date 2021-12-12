@@ -10,11 +10,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +20,8 @@ import java.util.List;
 
 import id.kelompok9.tripsys.R;
 import id.kelompok9.tripsys.database.AppDatabase;
-import id.kelompok9.tripsys.model.UserModel;
+import id.kelompok9.tripsys.model.CategoriesModel;
+import id.kelompok9.tripsys.model.UsersModel;
 
 public class RegisterUser extends AppCompatActivity {
 
@@ -49,8 +48,8 @@ public class RegisterUser extends AppCompatActivity {
         username = (EditText) findViewById(R.id.inputusername);
         password = (EditText) findViewById(R.id.inputpassword);
 
-        cancel = (Button) findViewById(R.id.tombolbatalbatal);
-        save = (Button) findViewById(R.id.tombolkirimkirim);
+        cancel = (Button) findViewById(R.id.backRegisterUser);
+        save = (Button) findViewById(R.id.tombolNextRegister);
 
         groupGender = (RadioGroup) findViewById(R.id.ver_ed_group);
         femaleGdr = (RadioButton) findViewById(R.id.femaleGender);
@@ -59,8 +58,7 @@ public class RegisterUser extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegisterUser.this, StartMenu.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -137,8 +135,8 @@ public class RegisterUser extends AppCompatActivity {
             username.setError("Please enter your username!");
         }else{
             AppDatabase db  = AppDatabase.getDbInstance(getApplicationContext());
-            List<UserModel> mahasiswaList;
-            mahasiswaList =db.userDao().cekUsername(username_in);
+            List<UsersModel> mahasiswaList;
+            mahasiswaList =db.usersDao().cekUsername(username_in);
             if(mahasiswaList.size()==1){
                 username.setError("Username Already Exist!");
             }else{
@@ -196,13 +194,24 @@ public class RegisterUser extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
                 AppDatabase db  = AppDatabase.getDbInstance(getApplicationContext());
-                UserModel userModel = new UserModel(
+                UsersModel usersModel = new UsersModel(
                         name_in, phonenumber_in,
                         address_in, gender,
                         username_in, password_in);
-                db.userDao().tambahUser(userModel);
+                int createdUser = (int) db.usersDao().tambahUser(usersModel);
+                CategoriesModel categoriesModel1 = new CategoriesModel(createdUser, "Work");
+                CategoriesModel categoriesModel2 = new CategoriesModel(createdUser, "Holiday");
+                CategoriesModel categoriesModel3 = new CategoriesModel(createdUser, "Honey Moon");
+                db.categoriesDao().tambahCategory(categoriesModel1);
+                db.categoriesDao().tambahCategory(categoriesModel2);
+                db.categoriesDao().tambahCategory(categoriesModel3);
                 Intent intent = new Intent(RegisterUser.this, StartMenu.class);
                 startActivity(intent);
+
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                Toast sukses = Toast.makeText(context, "Your account is successfully created.", duration);
+                sukses.show();
             }
         });
         dialog.show();

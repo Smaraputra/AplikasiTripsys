@@ -27,7 +27,7 @@
         android:textStyle="bold"></TextView>
 
     <TextView
-        android:id="@+id/viewrole"
+        android:id="@+id/viewgender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Admin"

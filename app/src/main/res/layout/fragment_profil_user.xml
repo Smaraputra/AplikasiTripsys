@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/abusoft"
     android:orientation="vertical"
-    tools:context=".activity.ProfilUserConfirmation">
+    tools:context=".fragment.ProfilUserFragment">
 
     <ScrollView
         android:layout_width="match_parent"

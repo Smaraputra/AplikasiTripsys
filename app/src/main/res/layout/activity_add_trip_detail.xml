@@ -10,7 +10,7 @@
     android:layout_marginRight="25dp"
     android:layout_marginBottom="15dp"
     android:orientation="vertical"
-    tools:context=".activity.AddTripDetail">
+    tools:context=".activity.tripdetail.AddNewTripDetail">
 
     <ScrollView
         android:layout_width="match_parent"

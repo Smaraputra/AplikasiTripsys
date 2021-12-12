@@ -17,12 +17,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import id.kelompok9.tripsys.R;
-import id.kelompok9.tripsys.fragment.ListTrip;
-import id.kelompok9.tripsys.fragment.ProfilUser;
+import id.kelompok9.tripsys.fragment.HomeFragment;
+import id.kelompok9.tripsys.fragment.ProfilUserFragment;
 
 public class DashboardApp extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,9 +31,9 @@ public class DashboardApp extends AppCompatActivity implements NavigationView.On
     SharedPreferences sharedPreferences;
 
     TextView viewname;
-    TextView viewrole;
+    TextView viewgender;
     String nama;
-    String role = "User";
+    String gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +47,14 @@ public class DashboardApp extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         sharedPreferences = getSharedPreferences("loginsession", Context.MODE_PRIVATE);
-        nama = sharedPreferences.getString("username","defaultValue");
+        nama = sharedPreferences.getString("nama","defaultValue");
+        gender = sharedPreferences.getString("gender","defaultValue");
 
         viewname = headerView.findViewById(R.id.viewnama);
-        viewrole = headerView.findViewById(R.id.viewrole);
+        viewgender = headerView.findViewById(R.id.viewgender);
 
         viewname.setText(nama);
-        viewrole.setText(role);
+        viewgender.setText(gender);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(DashboardApp.this, drawerLayout,
                 toolbar, R.string.buka, R.string.tutup);
@@ -62,7 +62,7 @@ public class DashboardApp extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if(savedInstanceState==null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new ListTrip()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.home);
         }
     }
@@ -80,11 +80,11 @@ public class DashboardApp extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.homemenu:
-                getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new ListTrip(), "HomeFragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new HomeFragment(), "HomeFragment").commit();
                 break;
 
             case R.id.profilmenu:
-                getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new ProfilUser(), "ProfileFragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.tempatmunculfragment, new ProfilUserFragment(), "ProfileFragment").commit();
                 break;
 
             case R.id.logoutmenu:
