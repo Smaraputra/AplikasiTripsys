@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Modul4progmob">
         <activity
+            android:name=".EditTripActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.tripactivity.ShowActivityDetail"
             android:exported="true" />
         <activity
