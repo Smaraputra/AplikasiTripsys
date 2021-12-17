@@ -17,7 +17,7 @@ public interface TripDetailsDao {
     @Query("Select * from trip_details WHERE id_trip_detail = :idmasuk")
     List<TripDetailsModel> getOneTripDetail(int idmasuk);
 
-    @Query("Select * from trip_details WHERE id_trip_trip_detail = :idmasuk")
+    @Query("Select * from trip_details WHERE id_trip_trip_detail = :idmasuk ORDER BY date_trip_detail")
     List<TripDetailsModel> getTripDetailOnTripID(int idmasuk);
 
     @Query("DELETE FROM trip_details WHERE id_trip_detail = :idmasuk")

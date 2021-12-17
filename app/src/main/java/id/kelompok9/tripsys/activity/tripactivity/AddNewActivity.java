@@ -63,8 +63,24 @@ public class AddNewActivity extends AppCompatActivity {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddNewActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time.setText(hourOfDay+":"+minute);
-                        time_in = hourOfDay+":"+minute;
+                        Log.d("AAAAAAA", String.valueOf(minute));
+                        if(minute<10){
+                            if(hourOfDay<10){
+                                time.setText("0"+hourOfDay+":0"+minute);
+                                time_in = "0"+hourOfDay+":0"+minute;
+                            }else{
+                                time.setText(hourOfDay+":0"+minute);
+                                time_in = hourOfDay+":0"+minute;
+                            }
+                        }else{
+                            if(hourOfDay<10){
+                                time.setText("0"+hourOfDay+":"+minute);
+                                time_in = "0"+hourOfDay+":"+minute;
+                            }else{
+                                time.setText(hourOfDay+":"+minute);
+                                time_in = hourOfDay+":"+minute;
+                            }
+                        }
                         statusJam = 1;
                     }
                 },

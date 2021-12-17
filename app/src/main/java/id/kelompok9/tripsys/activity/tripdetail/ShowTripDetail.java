@@ -16,22 +16,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.kelompok9.tripsys.R;
+import id.kelompok9.tripsys.activity.tripactivity.ShowActivityDetail;
+import id.kelompok9.tripsys.adapter.ActivityAdapter;
 import id.kelompok9.tripsys.adapter.TripDetailAdapter;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.TripDetailsModel;
 import id.kelompok9.tripsys.model.TripsModel;
 
-public class ShowTripDetail extends AppCompatActivity {
+public class ShowTripDetail extends AppCompatActivity implements TripDetailAdapter.TripDetailDeletePressed {
 
     RecyclerView tripdetail;
     TripDetailAdapter tripDetailAdapter;
     FloatingActionButton fabDetail;
     TextView start, end, name, category, nodata;
     Button backToHome;
-
+    AppDatabase db;
     int idtrip;
     List<TripsModel> trip = new ArrayList<>();
     List<TripDetailsModel> detail = new ArrayList<>();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +57,8 @@ public class ShowTripDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         idtrip = intent.getIntExtra("idtrip", 0);
-
-        AppDatabase db = AppDatabase.getDbInstance(ShowTripDetail.this);
-        trip = db.tripsDao().getOneTrip(idtrip);
-        detail = db.tripDetailsDao().getTripDetailOnTripID(trip.get(0).getId_trip());
-        if(detail.size()==0){
-            nodata.setVisibility(View.VISIBLE);
-            tripdetail.setVisibility(View.GONE);
-        }else{
-            nodata.setVisibility(View.GONE);
-            tripdetail.setVisibility(View.VISIBLE);
-        }
+        db = AppDatabase.getDbInstance(ShowTripDetail.this);
+        getData();
 
         start.setText(trip.get(0).getTrip_start());
         end.setText(trip.get(0).getTrip_end());
@@ -82,10 +81,30 @@ public class ShowTripDetail extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    public void DeleteTripDetail() {
+        getData();
+    }
+
+    public void getData(){
+
+        trip = db.tripsDao().getOneTrip(idtrip);
+        detail = db.tripDetailsDao().getTripDetailOnTripID(trip.get(0).getId_trip());
+        if(detail.size()==0){
+            nodata.setVisibility(View.VISIBLE);
+            tripdetail.setVisibility(View.GONE);
+        }else{
+            nodata.setVisibility(View.GONE);
+            tripdetail.setVisibility(View.VISIBLE);
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShowTripDetail.this);
         tripdetail.setLayoutManager(linearLayoutManager);
         tripdetail.setHasFixedSize(true);
         tripDetailAdapter = new TripDetailAdapter(ShowTripDetail.this, detail, idtrip);
+        tripDetailAdapter.setClickEvent((TripDetailAdapter.TripDetailDeletePressed) this);
         tripdetail.setAdapter(tripDetailAdapter);
     }
 }

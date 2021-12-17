@@ -21,6 +21,7 @@ public class ActivityModel {
 
     @Ignore
     public ActivityModel(int id_trip_activity, int id_trip_detail_activity, String clock_activity, String to_do_activity) {
+        this.id_trip_activity = id_trip_activity;
         this.id_trip_detail_activity = id_trip_detail_activity;
         this.clock_activity = clock_activity;
         this.to_do_activity = to_do_activity;
@@ -28,6 +29,7 @@ public class ActivityModel {
 
     public ActivityModel(int id_activity, int id_trip_activity, int id_trip_detail_activity, String clock_activity, String to_do_activity) {
         this.id_activity = id_activity;
+        this.id_trip_activity = id_trip_activity;
         this.id_trip_detail_activity = id_trip_detail_activity;
         this.clock_activity = clock_activity;
         this.to_do_activity = to_do_activity;

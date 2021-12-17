@@ -121,6 +121,7 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
                         AppDatabase db  = AppDatabase.getDbInstance(context);
                         db.activitiesDao().deleteAllActivityOnTripDetailID(iddetailtrip);
                         db.tripDetailsDao().deleteOneTripDetail(iddetailtrip);
+                        tripDetailDeletePressed.DeleteTripDetail();
                     }
                 })
                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
@@ -132,5 +133,13 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
         AlertDialog alertDialog = alertDialogBuilder.create();
 
         alertDialog.show();
+    }
+
+    TripDetailAdapter.TripDetailDeletePressed tripDetailDeletePressed;
+    public interface TripDetailDeletePressed {
+        void DeleteTripDetail();
+    }
+    public void setClickEvent(TripDetailAdapter.TripDetailDeletePressed event) {
+        this.tripDetailDeletePressed = event;
     }
 }

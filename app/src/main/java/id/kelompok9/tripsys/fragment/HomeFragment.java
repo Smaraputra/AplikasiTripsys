@@ -1,5 +1,6 @@
 package id.kelompok9.tripsys.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,8 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.kelompok9.tripsys.activity.trip.AddNewTrip;
+import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.adapter.TripAdapter;
 import id.kelompok9.tripsys.R;
+import id.kelompok9.tripsys.adapter.TripDetailAdapter;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.CategoriesModel;
 import id.kelompok9.tripsys.model.TripsModel;
@@ -44,8 +47,9 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     SharedPreferences sharedPreferences;
     TripAdapter tripAdapter;
+    AppDatabase db;
 
-    int iduser;
+    int iduser, pos;
     String pilihanCategoryStr;
 
     @Nullable
@@ -70,7 +74,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        AppDatabase db  = AppDatabase.getDbInstance(getContext());
+        db  = AppDatabase.getDbInstance(getContext());
         sharedPreferences = getContext().getSharedPreferences("loginsession", getContext().MODE_PRIVATE);
         iduser = sharedPreferences.getInt("iduser",0);
 
@@ -89,36 +93,9 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 //Membaca pilihan periode
                 pilihanCategoryStr = spinnerCategory.getSelectedItem().toString();
-                Log.d("IDDDDDD HOME", String.valueOf(position));
-                if(pilihanCategoryStr.equals("All Category")){
-                    trips.clear();
-                    trips = db.tripsDao().getTripOnUserID(iduser);
+                pos = position;
+                getData();
 
-                    if(trips.size()==0){
-                        recyclerView.setVisibility(View.GONE);
-                        textNoDataTrip.setVisibility(View.VISIBLE);
-                    }else{
-                        recyclerView.setVisibility(View.VISIBLE);
-                        textNoDataTrip.setVisibility(View.GONE);
-                    }
-
-                    tripAdapter = new TripAdapter(getContext(), trips);
-                    recyclerView.setAdapter(tripAdapter);
-                }else{
-                    trips.clear();
-                    trips = db.tripsDao().getTripOnUserIDCatID(iduser, position);
-
-                    if(trips.size()==0){
-                        recyclerView.setVisibility(View.GONE);
-                        textNoDataTrip.setVisibility(View.VISIBLE);
-                    }else{
-                        recyclerView.setVisibility(View.VISIBLE);
-                        textNoDataTrip.setVisibility(View.GONE);
-                    }
-
-                    tripAdapter = new TripAdapter(getContext(), trips);
-                    recyclerView.setAdapter(tripAdapter);
-                }
             }
 
             @Override
@@ -127,5 +104,48 @@ public class HomeFragment extends Fragment {
             }
 
         });
+    }
+
+    public void getData(){
+        if(pilihanCategoryStr.equals("All Category")){
+            trips.clear();
+            trips = db.tripsDao().getTripOnUserID(iduser);
+
+            if(trips.size()==0){
+                recyclerView.setVisibility(View.GONE);
+                textNoDataTrip.setVisibility(View.VISIBLE);
+            }else{
+                recyclerView.setVisibility(View.VISIBLE);
+                textNoDataTrip.setVisibility(View.GONE);
+            }
+            tripAdapter = new TripAdapter(getContext(), trips);
+            tripAdapter.setClickEvent(new TripAdapter.TripDeletePressed() {
+                @Override
+                public void DeleteTrip() {
+                    getData();
+                }
+            });
+            recyclerView.setAdapter(tripAdapter);
+        }else{
+            trips.clear();
+            trips = db.tripsDao().getTripOnUserIDCatID(iduser, pos);
+
+            if(trips.size()==0){
+                recyclerView.setVisibility(View.GONE);
+                textNoDataTrip.setVisibility(View.VISIBLE);
+            }else{
+                recyclerView.setVisibility(View.VISIBLE);
+                textNoDataTrip.setVisibility(View.GONE);
+            }
+
+            tripAdapter = new TripAdapter(getContext(), trips);
+            tripAdapter.setClickEvent(new TripAdapter.TripDeletePressed() {
+                @Override
+                public void DeleteTrip() {
+                    getData();
+                }
+            });
+            recyclerView.setAdapter(tripAdapter);
+        }
     }
 }

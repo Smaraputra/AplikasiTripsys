@@ -21,7 +21,7 @@ public interface ActivitiesDao {
     @Query("Select * from activities WHERE id_activity = :idmasuk")
     List<ActivityModel> getOneActivity(int idmasuk);
 
-    @Query("Select * from activities WHERE id_trip_detail_activity = :idmasuk")
+    @Query("Select * from activities WHERE id_trip_detail_activity = :idmasuk ORDER BY clock_activity")
     List<ActivityModel> getActivityOnTripDetailID(int idmasuk);
 
     @Query("DELETE FROM activities WHERE id_activity = :idmasuk")

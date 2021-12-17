@@ -81,14 +81,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int idact = mArrayList.get(getAdapterPosition()).getId_trip_activity();
+                    int idact = mArrayList.get(getAdapterPosition()).getId_activity();
                     showDialogDelete(idact);
                 }
             });
         }
     }
 
-    private void showDialogDelete(int idact){
+    private void showDialogDelete(int idacts){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         alertDialogBuilder.setTitle("You want to delete this activity?");
@@ -100,7 +100,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
                 .setPositiveButton("Delete",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         AppDatabase db  = AppDatabase.getDbInstance(context);
-                        db.activitiesDao().deleteOneActivity(idact);
+                        db.activitiesDao().deleteOneActivity(idacts);
+                        activityDeletePressed.DeleteActivity();
                     }
                 })
                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
@@ -112,5 +113,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         AlertDialog alertDialog = alertDialogBuilder.create();
 
         alertDialog.show();
+    }
+
+    ActivityDeletePressed activityDeletePressed;
+    public interface ActivityDeletePressed {
+        void DeleteActivity();
+    }
+    public void setClickEvent(ActivityDeletePressed event) {
+        this.activityDeletePressed = event;
     }
 }
