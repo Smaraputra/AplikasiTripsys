@@ -24,6 +24,9 @@ public interface ActivitiesDao {
     @Query("Select * from activities WHERE id_trip_detail_activity = :idmasuk ORDER BY clock_activity")
     List<ActivityModel> getActivityOnTripDetailID(int idmasuk);
 
+    @Query("UPDATE activities SET clock_activity = :waktu, to_do_activity = :todo WHERE id_activity = :idmasuk")
+    void updateOneActivity(int idmasuk, String waktu, String todo);
+
     @Query("DELETE FROM activities WHERE id_activity = :idmasuk")
     void deleteOneActivity(int idmasuk);
 

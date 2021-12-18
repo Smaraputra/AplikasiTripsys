@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.kelompok9.tripsys.R;
+import id.kelompok9.tripsys.activity.trip.EditTrip;
 import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.CategoriesModel;
@@ -92,7 +93,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder>{
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    int idtrip = mArrayList.get(getAdapterPosition()).getId_trip();
+                    Intent intent = new Intent(context, EditTrip.class);
+                    intent.putExtra("idtrip", idtrip);
+                    context.startActivity(intent);
                 }
             });
 

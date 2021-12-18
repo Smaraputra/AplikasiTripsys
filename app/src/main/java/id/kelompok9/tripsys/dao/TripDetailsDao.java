@@ -26,6 +26,10 @@ public interface TripDetailsDao {
     @Query("DELETE FROM trip_details WHERE id_trip_trip_detail = :idmasuk")
     void deleteAllTripDetailONTripID(int idmasuk);
 
+    @Query("UPDATE trip_details SET activity_trip_detail = :act, date_trip_detail = :date, " +
+            "location_trip_detail = :location, note_trip_detail = :note WHERE id_trip_detail = :idmasuk")
+    void updateOneTripDetail(int idmasuk, String act, String date, String location, String note);
+
     @Insert
     void tambahTripDetail(TripDetailsModel tripDetailsModel);
 

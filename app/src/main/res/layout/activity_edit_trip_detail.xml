@@ -5,22 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
     android:orientation="vertical"
-    tools:context=".activity.tripactivity.AddNewActivity">
+    tools:context=".activity.tripdetail.EditTripDetail">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
+            android:id="@+id/toolbar4"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/hijau_muda">
 
             <Button
-                android:id="@+id/backAddActivityDetail"
+                android:id="@+id/backEditDetailTrip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/hijau_muda"
@@ -32,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Add Activity Details"
+                android:text="Edit Trip Details"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -64,7 +66,7 @@
                     card_view:cardElevation="10dp">
 
                     <LinearLayout
-                        android:layout_width="380dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:paddingTop="5dp"
@@ -79,7 +81,7 @@
                             android:foregroundGravity="center"
                             android:gravity="center"
                             android:paddingLeft="3dp"
-                            android:text="Please enter your activity details."
+                            android:text="Please add your activity during the trip."
                             android:textColor="@color/hijau_soft"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -91,9 +93,9 @@
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:paddingLeft="3dp"
-                    android:text="Clock"
+                    android:text="Date"
                     android:textColor="@color/hijau_soft"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -104,18 +106,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/showAddClockActivity"
+                        android:id="@+id/showEditDateDetailTrip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingLeft="3dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:text="TextView"
+                        android:text="Date not yet configured."
                         android:textSize="20sp" />
 
                     <Button
-                        android:id="@+id/addClockActivity"
+                        android:id="@+id/editDateDetailTrip"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
@@ -134,29 +136,69 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="3dp"
-                    android:text="To Do"
+                    android:text="Activity"
                     android:textColor="@color/hijau_soft"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/addToDoActivity"
+                    android:id="@+id/editActivityDetailTrip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Things to Do"
+                    android:hint="Activity during the Date"
+                    android:inputType="textPersonName"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="3dp"
+                    android:text="Location"
+                    android:textColor="@color/hijau_soft"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editLocationDetailTrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Location of Your Trip"
+                    android:inputType="textPersonName"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="3dp"
+                    android:text="Note"
+                    android:textColor="@color/hijau_soft"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editNoteDetailTrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Some Note"
                     android:inputType="textPersonName"
                     android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tombolSaveNewActivity"
+                        android:id="@+id/tombolSaveEditDetailTrip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

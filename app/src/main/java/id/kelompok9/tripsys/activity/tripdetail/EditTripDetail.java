@@ -1,7 +1,5 @@
 package id.kelompok9.tripsys.activity.tripdetail;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,31 +23,43 @@ import id.kelompok9.tripsys.R;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.TripDetailsModel;
 
-public class AddNewTripDetail extends AppCompatActivity {
+public class EditTripDetail extends AppCompatActivity {
 
     TextView showDate;
     EditText location, note, activity;
     Button back, save, adddate;
     String locactionStr, noteStr, activityStr, dateStr;
-    int mYear, mMonth, mDay, statusDate, idtrip, statusForm;
+    int mYear, mMonth, mDay, statusDate, idtrip, iddetailtrip, statusForm;
     String start, end;
     long starttime, endtime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_trip_detail);
+        setContentView(R.layout.activity_edit_trip_detail);
 
         Intent intent = getIntent();
         idtrip = intent.getIntExtra("idtrip", 0);
+        iddetailtrip = intent.getIntExtra("iddetailtrip", 0);
 
-        location = findViewById(R.id.addLocationDetailTrip);
-        note = findViewById(R.id.addNoteDetailTrip);
-        activity = findViewById(R.id.addActivityDetailTrip);
-        back = findViewById(R.id.backAddDetailTrip);
-        save = findViewById(R.id.tombolSaveNewDetailTrip);
-        adddate = findViewById(R.id.addDateDetailTrip);
-        showDate = findViewById(R.id.showDateDetailTrip);
+        location = findViewById(R.id.editLocationDetailTrip);
+        note = findViewById(R.id.editNoteDetailTrip);
+        activity = findViewById(R.id.editActivityDetailTrip);
+        back = findViewById(R.id.backEditDetailTrip);
+        save = findViewById(R.id.tombolSaveEditDetailTrip);
+        adddate = findViewById(R.id.editDateDetailTrip);
+        showDate = findViewById(R.id.showEditDateDetailTrip);
+        AppDatabase db = AppDatabase.getDbInstance(EditTripDetail.this);
+
+        noteStr = db.tripDetailsDao().getOneTripDetail(iddetailtrip).get(0).getNote_trip_detail();
+        activityStr = db.tripDetailsDao().getOneTripDetail(iddetailtrip).get(0).getActivity_trip_detail();
+        locactionStr = db.tripDetailsDao().getOneTripDetail(iddetailtrip).get(0).getLocation_trip_detail();
+        dateStr = db.tripDetailsDao().getOneTripDetail(iddetailtrip).get(0).getDate_trip_detail();
+
+        note.setText(noteStr);
+        activity.setText(activityStr);
+        showDate.setText(dateStr);
+        location.setText(locactionStr);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +68,7 @@ public class AddNewTripDetail extends AppCompatActivity {
             }
         });
 
-        AppDatabase db = AppDatabase.getDbInstance(AddNewTripDetail.this);
+
         start = db.tripsDao().getOneTrip(idtrip).get(0).getTrip_start();
         end = db.tripsDao().getOneTrip(idtrip).get(0).getTrip_end();
 
@@ -78,7 +90,7 @@ public class AddNewTripDetail extends AppCompatActivity {
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewTripDetail.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EditTripDetail.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         dateStr = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1) + "/" + String.valueOf(year);
@@ -102,14 +114,11 @@ public class AddNewTripDetail extends AppCompatActivity {
 
                 if(statusForm==3){
                     AppDatabase db  = AppDatabase.getDbInstance(getApplicationContext());
-                    TripDetailsModel tripDetailsModel = new TripDetailsModel(
-                            idtrip, dateStr, activityStr, locactionStr, noteStr
-                    );
-                    db.tripDetailsDao().tambahTripDetail(tripDetailsModel);
+                    db.tripDetailsDao().updateOneTripDetail(iddetailtrip, activityStr, dateStr, locactionStr, noteStr);
 
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
-                    Toast sukses = Toast.makeText(context, "Trip detail created.", duration);
+                    Toast sukses = Toast.makeText(context, "Trip detail updated.", duration);
                     sukses.show();
 
                     finish();

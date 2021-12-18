@@ -10,22 +10,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Modul4progmob">
         <activity
-            android:name=".EditTripActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.tripactivity.ShowActivityDetail"
             android:exported="true" />
         <activity
             android:name=".activity.tripactivity.AddNewActivity"
             android:exported="true" />
         <activity
+            android:name=".activity.tripactivity.EditActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.tripdetail.AddNewTripDetail"
+            android:exported="true" />
+        <activity
+            android:name=".activity.tripdetail.EditTripDetail"
             android:exported="true" />
         <activity
             android:name=".activity.tripdetail.ShowTripDetail"
             android:exported="true" />
         <activity
             android:name=".activity.trip.AddNewTrip"
+            android:exported="true" />
+        <activity
+            android:name=".activity.trip.EditTrip"
             android:exported="true" />
         <activity
             android:name=".activity.DashboardApp"

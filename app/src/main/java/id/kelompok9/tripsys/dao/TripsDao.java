@@ -16,6 +16,9 @@ public interface TripsDao {
     @Query("Select * from trips WHERE id_user_trip = :idmasuk")
     List<TripsModel> getTripOnUserID(int idmasuk);
 
+    @Query("UPDATE trips SET trip_category = :cat, trip_name = :name WHERE id_trip = :idmasuk")
+    void updateOneTrip(int idmasuk, int cat, String name);
+
     @Query("Select * from trips WHERE id_user_trip = :iduser AND trip_category = :idcat")
     List<TripsModel> getTripOnUserIDCatID(int iduser, int idcat);
 

@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.kelompok9.tripsys.R;
+import id.kelompok9.tripsys.activity.tripactivity.EditActivity;
 import id.kelompok9.tripsys.activity.tripactivity.ShowActivityDetail;
+import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.ActivityModel;
 import id.kelompok9.tripsys.model.TripDetailsModel;
@@ -74,7 +76,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    int idact = mArrayList.get(getAdapterPosition()).getId_activity();
+                    Intent intent = new Intent(context, EditActivity.class);
+                    intent.putExtra("idact", idact);
+                    context.startActivity(intent);
                 }
             });
 

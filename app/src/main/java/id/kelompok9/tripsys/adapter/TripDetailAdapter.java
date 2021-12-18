@@ -19,6 +19,7 @@ import java.util.List;
 
 import id.kelompok9.tripsys.R;
 import id.kelompok9.tripsys.activity.tripactivity.ShowActivityDetail;
+import id.kelompok9.tripsys.activity.tripdetail.EditTripDetail;
 import id.kelompok9.tripsys.activity.tripdetail.ShowTripDetail;
 import id.kelompok9.tripsys.database.AppDatabase;
 import id.kelompok9.tripsys.model.TripDetailsModel;
@@ -93,7 +94,11 @@ public class TripDetailAdapter extends RecyclerView.Adapter<TripDetailAdapter.My
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    int iddetailtrip = mArrayList.get(getAdapterPosition()).getId_trip_detail();
+                    Intent intent = new Intent(context, EditTripDetail.class);
+                    intent.putExtra("iddetailtrip", iddetailtrip);
+                    intent.putExtra("idtrip", idtrip);
+                    context.startActivity(intent);
                 }
             });
 
