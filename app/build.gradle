@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "id.kelompok9.tripsys"
-        minSdk 30
+        minSdk 22
         targetSdk 31
         versionCode 1
         versionName "1.0"
